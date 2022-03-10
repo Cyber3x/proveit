@@ -1,0 +1,71 @@
+# App o sportu, organizaciji turnira, vjezbanja, utakimica, street stuff
+# biljezenje lokacija
+# organziiranje turnira
+# challanganje na 1v1s, 2v2s
+
+
+
+Notes:
+ - Moguce lagano organizirati turnire
+ - Lagano nac ekipu
+ - Ekipa za vjezbanje 
+ - 
+
+
+ - Moguce stavit stvari koje budu pod premium zidom
+ - Tinder za gymrats, tj. upoznavanje prije nalazenja.
+ - Ko uber za sport, mozes kliknut ko je blizu i ko oce igrat kosarku
+ - Sharable links for games
+ - 
+
+
+
+
+ - Cracked ideja: doc s userbaseom
+
+
+TIMELINE:
+    - App to find partners for gym
+    - App to find partners for sports
+    - "Social network" za sport
+    - Ketegorije sportova -> 
+        - Select kategorija pa selectat radnja u toj kategoriji
+        - Mogucnost spajanja trainera u verziji v2
+    - Svaki sport/aktivnost bi imala kategoriju
+    - Find a partnet to try a sport with
+    - Mogucnost chatanja prije nalazenja radi detalja, radi sigurnosti
+    - Simple as fuck usage, ako hoces pokrenut game.
+    * prilagodavanja homepagae prema potrebama korisnika - ili si ga korisnik moze slozit *
+    - Dobra stvar za introverte da se upoznaju s nekim, odu igrat novi sport
+    - Mogucnost stvaranja virtualnoih profila koji su povezani
+    - Mogucnost upisivanja rezultata i statova poslje gejmova kako bi se rezultati zapamtili ili kako bi se pratio score najboljih playera u nekom gradu
+    - Cool stvar za sistematizacuju turnira, upisivanje rezultata, pracenje stetova -> rezultati su odmah dostupni, svima vidljivi, mogucost pullanja statova preko api-a van 
+    pa se to moze ukljucit u OBS tipa dok se streama UniZg
+    - Tab za sluzbenije turnire (organizirane by vece organizacije, mozda verified)
+    -  
+    - TALK ABOUT MONEY:
+    - matchmakind 100% free
+    - leaderboards could be paid feature, competitive is paid.     
+    - moramo nest napraviti, nek ima security problema, ali puno je bitnije da smo mi svjesni tih problema i imamo app nego obrnuto
+    - gps can be incorporated to find each other 
+
+    What's an event. (can paid feature) - V.2
+    - Turnir koji ne organizira privatna osoba itipa. RK KC, UNIZG
+    - mogucnost odredivanje sudaca
+    - 
+
+ - TALK ABOUT MVP AND CORE FEATURES:
+    - CORE:
+    - Matchmaking, "Find a game" - tak ce pisatu u aplikaciji bolje psihiloski zvuci.  # security je bitan ovdje, pedofili postoje ovo ono
+        - Realtime (with filters and categories), ako se izaziva 1v1 a vise ljudi je zainteresirano mogunost automatske preporuke turnira (v2)0
+        - Scheduled - Moguce shareat game da se pridruze.
+    - 
+
+
+MONETIZATION:
+    - mutiple pro features
+
+
+
+SIMILAR APPS:
+    - PLAYO: nemaju competative, lose za hrv podrucje. 
