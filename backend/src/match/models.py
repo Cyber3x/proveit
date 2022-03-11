@@ -23,7 +23,7 @@ class Match(models.Model):
         FINISHED = 'F'
         CANCELED = 'C'
     
-    
+    sport = models.ForeignKey(Sport, on_delete = models.DO_NOTHING)
     players = models.ManyToManyField(User)
     start_datetime = models.DateTimeField()
     number_of_players = models.PositiveSmallIntegerField(default=0)

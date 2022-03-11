@@ -95,7 +95,6 @@ class CreateLobbyView(APIView):
         is_private = True if is_private_int == 1 else False
 
 
-
         match = Match.objects.create(number_of_players = n_players, state = 'L', 
                                     is_ranked = is_ranked, is_private = is_private, latitude = latitude, 
                                     longitude = longitude, start_datetime = datetime.now())
@@ -142,15 +141,13 @@ class CancelMatchView(APIView):
         serializer = MatchSerializer(match)
         return Response(serializer.data, status=HTTP_200_OK)
 
-
+# TODO: replace user with player
 # match/addPlayer/<user_id>/<match_id> 
 class AddPlayerView(APIView):
 
     def post(self, request: Request, user_id,match_id):
 
         match = Match.objects.get(id = match_id)
-        player = User.objects.get(id = user_id)
-
         match.players.add(user_id)
 
         serializer = MatchSerializer(match)
