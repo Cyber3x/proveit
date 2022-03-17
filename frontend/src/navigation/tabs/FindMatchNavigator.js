@@ -1,4 +1,4 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import {
   ACTIVE_MATCH,
@@ -23,9 +23,7 @@ const FindMatchNavigator = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <FindMatchNav.Screen
-        name={FIND_MATCH}
-        component={FindMatchScreen}></FindMatchNav.Screen>
+      <FindMatchNav.Screen name={FIND_MATCH} component={FindMatchScreen} />
       <FindMatchNav.Screen
         name={CREATE_MATCH}
         component={CreateMatchScreen}></FindMatchNav.Screen>

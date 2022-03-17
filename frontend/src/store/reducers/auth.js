@@ -1,4 +1,4 @@
-import {SET_LOGIN} from '../actions/auth';
+import { SET_LOGIN } from '../actions/auth';
 
 const initalState = {
   isLoggedIn: false,
@@ -7,7 +7,7 @@ const initalState = {
 export default (state = initalState, action) => {
   switch (action.type) {
     case SET_LOGIN:
-      let newState = {...state};
+      let newState = { ...state };
       newState.isLoggedIn = action.newLogin;
       return newState;
     default:
