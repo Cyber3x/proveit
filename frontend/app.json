@@ -1,4 +1,13 @@
 {
   "name": "ProveIT",
-  "displayName": "ProveIT"
+  "displayName": "ProveIT",
+  "expo": {
+    "name": "ProveIT",
+    "slug": "prove-it"
+  },
+  "android": {
+    "package": "com.proveit",
+    "versionCode": 1,
+    "googleServicesFile": "./google-services.json"
+  }
 }

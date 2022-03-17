@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "205709496616",
+    "project_id": "prove-it-dc0f0",
+    "storage_bucket": "prove-it-dc0f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:205709496616:android:4b9661180263e9e0f9801d",
+        "android_client_info": {
+          "package_name": "com.proveit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "205709496616-3msge708rdfe2aref7jh0ecc4eqqdgo5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXRRvvxHfCa4y4zWGVHnI2SAmS5CyBVkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "205709496616-3msge708rdfe2aref7jh0ecc4eqqdgo5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
