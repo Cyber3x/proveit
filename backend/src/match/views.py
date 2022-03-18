@@ -11,7 +11,7 @@ from .serializers import MatchSerializer
 from datetime import date, timedelta, datetime
 import geopy.distance
 
-
+# TODO: add sport to POST
 # match/
 class MatchView(APIView):
 
@@ -51,24 +51,26 @@ class MatchDetailsView(APIView):
         return Response(serializer.data, status=HTTP_200_OK)
 
 
-# match/filter/<n_players>/<is_ranked>/<radius>
+# match/filter/<n_players>/<is_ranked>/<radius>/<timedelta_hours>/<sport_id>
 class FilteredMatchesView(APIView):
 
-    def get(self, request: Request, n_players, ranked_int, radius) -> Response:
+    def get(self, request: Request, n_players, ranked_int, radius, state_int, timedelta_hours, sport_id) -> Response:
 
-
+        # state_int -> state string
+        states = "LSAFC"
+        state = states[state_int]
+       
         # get datetime values to filter for only the next 3 hours
         startDateTime = datetime.today()
-        endDateTime = startDateTime + timedelta(hours=3)
+        endDateTime = startDateTime + timedelta(hours=timedelta_hours)
 
         # get ranked value from url int
         ranked = True if ranked_int == 1 else False
 
         # perform the filtering
         matches = Match.objects.filter(number_of_players = n_players, start_datetime__range = [startDateTime, endDateTime], 
-                                       state = 'L', is_private = False, is_ranked = ranked)
+                                       state = state, is_private = False, is_ranked = ranked, sport = sport_id)
 
-        
         # location filtering with geopy
         current_location = (45.761025, 16.005809)
         for match in matches:
@@ -85,23 +87,20 @@ class FilteredMatchesView(APIView):
 
 
 
-# TODO: add sport 
-# match/create/<n_players>/<is_ranked>/<is_private>/<latitude>/<longitude>/
+# match/create/<n_players>/<is_ranked>/<is_private>/<latitude>/<longitude>/<sport_id>
 class CreateLobbyView(APIView):
 
-    def post(self, request: Request, n_players, is_ranked_int, is_private_int, latitude, longitude) -> Response:
+    def post(self, request: Request, n_players, is_ranked_int, is_private_int, latitude, longitude, sport_id) -> Response:
 
         is_ranked = True if is_ranked_int == 1 else False
         is_private = True if is_private_int == 1 else False
 
-
         match = Match.objects.create(number_of_players = n_players, state = 'L', 
                                     is_ranked = is_ranked, is_private = is_private, latitude = latitude, 
-                                    longitude = longitude, start_datetime = datetime.now())
+                                    longitude = longitude, start_datetime = datetime.now(), sport = sport_id)
 
         serializer = MatchSerializer(match)
         return Response(serializer.data, status=HTTP_200_OK)
-
     
 # match/start/id
 class StartMatchView(APIView):
@@ -115,7 +114,6 @@ class StartMatchView(APIView):
         serializer = MatchSerializer(match)
         return Response(serializer.data, status=HTTP_200_OK)
 
-
 # match/end/id
 class EndMatchView(APIView):
 
@@ -127,7 +125,6 @@ class EndMatchView(APIView):
 
         serializer = MatchSerializer(match)
         return Response(serializer.data, status=HTTP_200_OK)
-
 
 # match/cancel/id
 class CancelMatchView(APIView):

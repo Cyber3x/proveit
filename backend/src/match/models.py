@@ -8,9 +8,12 @@ from django.contrib.auth.models import User
 class Sport(models.Model):
     # TODO: brainstrom and add needed fields
 
-    name = models.CharField(max_length = 20, default = "Basketball")
+    name = models.CharField(max_length = 20, default = "")
     max_players = models.IntegerField(default = 100)
-    match_type_options = models.CharField(max_length=100)
+    min_players = models.IntegerField(default = 1)
+
+    def __str__(self):
+         return self.name
 
 
 class Match(models.Model):
@@ -23,8 +26,9 @@ class Match(models.Model):
         FINISHED = 'F'
         CANCELED = 'C'
     
-    sport = models.ForeignKey(Sport, on_delete = models.DO_NOTHING)
-    players = models.ManyToManyField(User)
+    admin = models.OneToOneField(User, default = None, on_delete = models.DO_NOTHING, related_name= "game_admin")
+    sport = models.ForeignKey(Sport, on_delete = models.DO_NOTHING, default = 1)
+    players = models.ManyToManyField(User, default = None)
     start_datetime = models.DateTimeField()
     number_of_players = models.PositiveSmallIntegerField(default=0)
     state = models.CharField(choices=States.choices, max_length=1, default=States.LOBBY)
@@ -36,6 +40,10 @@ class Match(models.Model):
 
     def _str_(self):
         return f'match of type: {self.state}'
+
+    if sport:
+        def __str__(self):
+            return f'{int(self.number_of_players / 2)}v{int(self.number_of_players / 2)} {self.sport.name}'
 
 
 

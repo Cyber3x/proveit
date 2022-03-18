@@ -15,7 +15,7 @@ urlpatterns = [
     path('filter/<int:n_players>/<int:ranked_int>/<int:radius>', FilteredMatchesView.as_view(), name='filtered_matches_view'),
 
     # match creation + player adding / removing
-    path('create/<int:n_players>/<int:is_ranked_int>/<int:is_private_int>/<float:latitude>/<float:longitude>', CreateLobbyView.as_view(), name = 'create_lobby_view'),
+    path('create/<int:n_players>/<int:is_ranked_int>/<int:is_private_int>/<float:latitude>/<float:longitude>/<int:sport_id>', CreateLobbyView.as_view(), name = 'create_lobby_view'),
     path('addPlayer/<int:user_id>/<match_id>', AddPlayerView.as_view(), name = "add_player_view"),
     path('removePlayer/<int:user_id>/<match_id>', RemovePlayerView.as_view(), name = "remove_player_view"),
 
