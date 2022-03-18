@@ -9,6 +9,7 @@ import handballImage from '../assets/handball.jpg';
 import { LEADERBOARDS } from '../constants/routeNames';
 
 import { useStore } from '../store/globalStore';
+import { MAIN_BACKGROUND } from '../constants/colors';
 
 const sports = [
   {
@@ -48,8 +49,9 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {sports.map(({ imageSrc, text, sportName }) => (
+      {sports.map(({ imageSrc, text, sportName }, index) => (
         <SportCard
+          key={index}
           imageSrc={imageSrc}
           text={text}
           sportName={sportName}
@@ -66,5 +68,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: 4,
+    backgroundColor: MAIN_BACKGROUND,
   },
 });
