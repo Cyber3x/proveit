@@ -1,11 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {
-  MAIN_BACKGROUND,
-  SECONDARY_BACKGROUND,
-  WHITE_1,
-} from '../constants/colors';
+import { SECONDARY_BACKGROUND, WHITE_1 } from '../constants/colors';
 import { useState } from 'react';
 
 const Dropdown = props => {
@@ -57,7 +53,7 @@ const styles = StyleSheet.create({
   container: {
     width: '60%',
   },
-  main: {
+  toplevel: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
