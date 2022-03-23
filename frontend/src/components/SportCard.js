@@ -1,5 +1,11 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, Text, View, Pressable } from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+} from 'react-native';
 
 const SportCard = ({ imageSrc, text, onPress }) => {
   return (

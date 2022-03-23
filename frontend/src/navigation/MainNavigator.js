@@ -17,9 +17,8 @@ import { FontAwesome } from '@expo/vector-icons';
 import {
   SECONDARY_BACKGROUND,
   TAB_BAR_ACTIVE_BACKGROUND,
-  TAB_BAR_BACBGROUND,
-  WHITE_0,
   WHITE_1,
+  WHITE_0,
 } from '../constants/colors';
 
 const MainNavigator = () => {

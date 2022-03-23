@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { useStore } from '../store/globalStore';
-import { BLUE_GLASS, MAIN_BACKGROUND, WHITE_0 } from '../constants/colors';
+import { MAIN_BACKGROUND, WHITE_0 } from '../constants/colors';
 
 const LeaderboardsSceen = props => {
   const currentSport = useStore(state => state.currentSport);
