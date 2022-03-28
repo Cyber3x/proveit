@@ -6,13 +6,14 @@ import {
   View,
   Pressable,
 } from 'react-native';
+import { getImage, getName } from '../utils/getBasedOnSport';
 
-const SportCard = ({ imageSrc, text, onPress }) => {
+const SportCard = ({ sport, onPress }) => {
   return (
     <Pressable style={styles.card} onPress={onPress}>
-      <ImageBackground source={imageSrc} style={styles.image}>
+      <ImageBackground source={getImage(sport)} style={styles.image}>
         <View style={styles.darken}>
-          <Text style={styles.text}>{text.toUpperCase()}</Text>
+          <Text style={styles.text}>{getName(sport).toUpperCase()}</Text>
         </View>
       </ImageBackground>
     </Pressable>

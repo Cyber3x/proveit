@@ -1,19 +1,42 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
-import tennisImage from '../assets/tenis.jpg';
-import { SECONDARY_BACKGROUND, WHITE_0 } from '../constants/colors';
+import {
+  ImageBackground,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import {
+  GRAY_MAIN,
+  GREEN_MAIN,
+  SECONDARY_BACKGROUND,
+  WHITE_1,
+  WHITE_0,
+  YELLOW_WARNING,
+} from '../constants/colors';
 
-const MatchCard = () => {
+import { getImage, getName } from '../utils/getBasedOnSport';
+
+const MatchCard = ({
+  sport,
+  sportNameText,
+  matchPlayerCountText,
+  matchStatusText,
+}) => {
   return (
     <View style={styles.container}>
-      <ImageBackground source={tennisImage} style={styles.sportImage}>
+      <ImageBackground source={getImage(sport)} style={styles.sportImage}>
         <LinearGradient
-          colors={['transparent', SECONDARY_BACKGROUND]}
-          start={[0, 0.5]}
+          colors={['rgba(0,0,0,0.5)', SECONDARY_BACKGROUND]}
+          start={[0.2, 0.5]}
           end={[0.8, 0.5]}
         >
-          <Text style={styles.text}>Tenis</Text>
+          <View style={styles.leftPart}>
+            <Text style={styles.sportText}>{getName(sport)}</Text>
+            <Text style={styles.playerCount}>{matchPlayerCountText}</Text>
+            <Text style={styles.matchStatus}>{matchStatusText}</Text>
+          </View>
         </LinearGradient>
       </ImageBackground>
       <View style={styles.rightPart}>
@@ -22,6 +45,9 @@ const MatchCard = () => {
           <Text style={styles.separator}>|</Text>
           <Text style={styles.dateTime}>17:30</Text>
         </View>
+        <Pressable style={styles.joinButton}>
+          <Text style={styles.joinButtonText}>pridruži se</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -35,20 +61,40 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 10,
     overflow: 'hidden',
+    marginBottom: 15,
+  },
+  leftPart: {
+    marginTop: 10,
+    marginBottom: 15,
+    marginLeft: 15,
   },
   sportImage: {
     resizeMode: 'stretch',
     flex: 3,
   },
-  text: {
-    padding: 30,
+  sportText: {
+    fontSize: 24,
+    color: WHITE_0,
+    fontWeight: 'bold',
+    fontFamily: 'Open Sans',
   },
-  textView: {
-    backgroundColor: '',
+  playerCount: {
+    fontSize: 18,
+    color: GRAY_MAIN,
+    fontFamily: 'Open Sans',
+    fontWeight: 'bold',
+  },
+  matchStatus: {
+    color: YELLOW_WARNING,
+    fontSize: 12,
+    marginTop: 10,
   },
   rightPart: {
     flex: 2,
     backgroundColor: SECONDARY_BACKGROUND,
+    paddingTop: 10,
+    paddingBottom: 12,
+    paddingRight: 10,
   },
   dateTimeContainer: {
     flex: 1,
@@ -57,9 +103,24 @@ const styles = StyleSheet.create({
   },
   dateTime: {
     color: WHITE_0,
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  joinButton: {
+    backgroundColor: GREEN_MAIN,
+    padding: 7,
+    borderRadius: 5,
+  },
+  joinButtonText: {
+    textTransform: 'uppercase',
+    color: WHITE_0,
+    fontWeight: '500',
+    fontSize: 13,
+    textAlign: 'center',
   },
   separator: {
-    color: WHITE_0,
+    color: WHITE_1,
     fontWeight: '700',
+    fontSize: 20,
   },
 });
