@@ -6,9 +6,11 @@ import AppNavigator from './navigation/AppNavigator';
 import auth from './store/reducers/auth';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
+import profile from './store/reducers/profile';
 
 const rootReducer = combineReducers({
   auth: auth,
+  profile: profile,
 });
 
 const store = createStore(rootReducer);

@@ -13,6 +13,7 @@ const AppNavigator = () => {
     <AppNav.Navigator
       screenOptions={{
         headerShown: false,
+        animationEnabled: false,
       }}
       initialRouteName={isLoggedIn ? MAIN_NAV : AUTH_NAV}
     >
