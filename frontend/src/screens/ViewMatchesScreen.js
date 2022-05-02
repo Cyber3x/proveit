@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import MatchCard from '../components/MatchCard';
 import { MAIN_BACKGROUND } from '../constants/colors';
+import { SCREEN_PADDING } from '../constants/sizes';
 import {
   BASKETBALL,
   FOOTBALL,
@@ -93,6 +94,6 @@ const styles = StyleSheet.create({
     backgroundColor: MAIN_BACKGROUND,
   },
   scrollView: {
-    padding: 15,
+    padding: SCREEN_PADDING,
   },
 });
