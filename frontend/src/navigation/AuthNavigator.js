@@ -12,6 +12,7 @@ const AuthNavigator = () => {
       initialRouteName={LOGIN}
       screenOptions={{
         headerShown: false,
+        animationEnabled: false,
       }}
     >
       <AuthNavigator.Screen name={LOGIN} component={LoginScreen} />

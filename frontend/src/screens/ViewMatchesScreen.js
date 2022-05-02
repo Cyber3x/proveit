@@ -55,7 +55,7 @@ const matches = [
   },
 ];
 
-const ViewMatchesScreen = props => {
+const ViewMatchesScreen = ({ navigation }) => {
   useEffect(() => {
     fetch('http://10.0.2.2/api/match/', {
       method: 'GET',
@@ -74,12 +74,7 @@ const ViewMatchesScreen = props => {
         }}
       >
         {matches.map((match, i) => (
-          <MatchCard
-            key={i}
-            sport={match.sport}
-            matchPlayerCountText={match.playerCountText}
-            matchStatusText={match.statusText}
-          />
+          <MatchCard key={i} match={match} navigation={navigation} />
         ))}
       </ScrollView>
     </View>

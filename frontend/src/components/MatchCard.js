@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
+  Button,
   ImageBackground,
   Pressable,
   StyleSheet,
@@ -15,15 +16,14 @@ import {
   WHITE_0,
   YELLOW_WARNING,
 } from '../constants/colors';
+import { LOBBY } from '../constants/routeNames';
 
 import { getImage, getName } from '../utils/getBasedOnSport';
 
-const MatchCard = ({
-  sport,
-  sportNameText,
-  matchPlayerCountText,
-  matchStatusText,
-}) => {
+const MatchCard = ({ match, navigation }) => {
+  const { sport, playerCountText, statusText } = match;
+  console.log('match data: ', match);
+
   return (
     <View style={styles.container}>
       <ImageBackground source={getImage(sport)} style={styles.sportImage}>
@@ -34,8 +34,8 @@ const MatchCard = ({
         >
           <View style={styles.leftPart}>
             <Text style={styles.sportText}>{getName(sport)}</Text>
-            <Text style={styles.playerCount}>{matchPlayerCountText}</Text>
-            <Text style={styles.matchStatus}>{matchStatusText}</Text>
+            <Text style={styles.playerCount}>{playerCountText}</Text>
+            <Text style={styles.matchStatus}>{statusText}</Text>
           </View>
         </LinearGradient>
       </ImageBackground>
@@ -45,7 +45,10 @@ const MatchCard = ({
           <Text style={styles.separator}>|</Text>
           <Text style={styles.dateTime}>17:30</Text>
         </View>
-        <Pressable style={styles.joinButton}>
+        <Pressable
+          style={styles.joinButton}
+          onPress={() => navigation.navigate(LOBBY, { match })}
+        >
           <Text style={styles.joinButtonText}>pridruži se</Text>
         </Pressable>
       </View>

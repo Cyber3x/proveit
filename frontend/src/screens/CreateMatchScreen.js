@@ -1,6 +1,5 @@
 import { StyleSheet, View, Text, Pressable, Switch } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { LOBBY } from '../constants/routeNames';
 import { SECONDARY_BACKGROUND, WHITE_1 } from '../constants/colors';
 import DropDownPicker from 'react-native-dropdown-picker';
 

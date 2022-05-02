@@ -1,40 +1,262 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import FilterDropdown from '../components/FilterDropdown';
-import NavButton from '../components/NavButton';
-import { BLUE_GLASS, MAIN_BACKGROUND, WHITE_0 } from '../constants/colors';
-import { CREATE_MATCH, VIEW_MATCHES } from '../constants/routeNames';
-import { SCREEN_PADDING } from '../constants/sizes';
-import { sportsDropdown } from '../data/DropdownValues';
+import { FontAwesome } from '@expo/vector-icons';
+import React, { useEffect, useState } from 'react';
+import { Pressable, StyleSheet, Switch, Text, View, Image } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { moderateScale } from 'react-native-size-matters';
+import ActionButton from '../components/ActionButton';
+import {
+  GREEN_MAIN,
+  MAIN_BACKGROUND,
+  RED_MAIN,
+  SECONDARY_BACKGROUND,
+  WHITE_1,
+} from '../constants/colors';
+import { VIEW_MATCHES } from '../constants/routeNames';
+import {
+  basketballTypes,
+  distanceDropdown,
+  footballTypes,
+  handballTypes,
+  sportsDropdown,
+  tenisTypes,
+  volleyballTypes,
+} from '../data/DropdownValues';
+import { useStore } from '../store/globalStore';
+import mapshot from '../assets/images/mapshot.png';
 
-const FindMatchScreen = props => {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState(sportsDropdown);
+/*
+  // State for sports dropdown
+  const [sports, setSports] = useState([
+    { label: 'Košarka', value: 'basketball' },
+    { label: 'Nogomet', value: 'football' },
+    { label: 'Tenis', value: 'tenis' },
+    { label: 'Odbojka', value: 'volleyball' },
+    { label: 'Rukomet', value: 'handball' },
+  ]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [sportValue, setSportValue] = useState(null);
+
+*/
+
+const FindMatchScreen = ({ navigation }) => {
+  // State for sports dropdown
+  const currentSport = useStore(state => state.currentSport);
+  const [sports, setSports] = useState(sportsDropdown);
+  const [sportOpen, setSportOpen] = useState(false);
+  const [sportValue, setSportValue] = useState(currentSport);
+
+  // Choose sport dropdown based on sport selected
+  const gt = [
+    {
+      label: 'Odaberite sport',
+      value: null,
+    },
+  ];
+
+  useEffect(() => {
+    switch (sportValue) {
+      case 'basketball':
+        setGameType(basketballTypes);
+        break;
+      case 'football':
+        setGameType(footballTypes);
+        break;
+      case 'tenis':
+        setGameType(tenisTypes);
+        break;
+      case 'volleyball':
+        setGameType(volleyballTypes);
+        break;
+      case 'handball':
+        setGameType(handballTypes);
+        break;
+      default:
+        break;
+    }
+  }, [sportValue]);
+
+  // State for sports dropdown
+  const [gameType, setGameType] = useState(gt);
+  const [gameTypeOpen, setGameTypeOpen] = useState(false);
+  const [gameTypeValue, setGameTypeValue] = useState(null);
+
+  // State for distance
+  const [distance, setDistance] = useState(distanceDropdown);
+  const [distanceOpen, setDistanceOpen] = useState(false);
+  const [distanceValue, setDistanceValue] = useState(null);
+
+  // State for ranked
+  const [ranked, setRanked] = useState(false);
+
+  const [num, setNum] = useState(0);
+  const [date, setDate] = useState(new Date());
+
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const handleDatetime = date => {
+    setDatePickerVisibility(false);
+    setNum(num + 100);
+    setDate(date);
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={{ textAlign: 'center', color: WHITE_0, fontSize: 20 }}>
-        FindMatchScreen
-      </Text>
-      <View style={styles.optionRow}>
-        <Text style={styles.lable}>Sport</Text>
-        <FilterDropdown
-          items={sportsDropdown}
-          value={value}
-          open={open}
-          setOpen={setOpen}
-          setValue={setValue}
-        />
+      <View style={styles.topView}>
+        <Image source={mapshot} style={styles.mapimage} />
       </View>
-      <NavButton
-        name="Create match"
-        navigate={() => props.navigation.navigate(CREATE_MATCH)}
-      />
-      <NavButton
-        name="View matches"
-        navigate={() => props.navigation.navigate(VIEW_MATCHES)}
-      />
+      <View style={styles.botView}>
+        <View style={{ ...styles.main, zIndex: 1500 }}>
+          {/* Dropwdown for sports */}
+          <View style={styles.toplevel}>
+            <Text style={styles.text}>Sport</Text>
+
+            <View style={styles.container2}>
+              <DropDownPicker
+                open={sportOpen}
+                value={sportValue}
+                items={sports}
+                setOpen={setSportOpen}
+                setValue={setSportValue}
+                setItems={setSports}
+                style={styles.dropdown}
+                textStyle={{ ...styles.text, fontFamily: 'OpenSans-Medium' }}
+                placeholder="Odaberite..."
+                listItemContainerStyle={styles.dropdownItem}
+                dropDownContainerStyle={{
+                  borderWidth: 0,
+                }}
+              />
+            </View>
+          </View>
+          {/* End dropdown for sports */}
+        </View>
+        <View style={{ ...styles.main, zIndex: 1400 }}>
+          {/* Dropwdown for game type */}
+          <View style={styles.toplevel}>
+            <Text style={styles.text}>Vrsta igre</Text>
+
+            <View style={styles.container2}>
+              <DropDownPicker
+                open={gameTypeOpen}
+                value={gameTypeValue}
+                items={gameType}
+                setOpen={setGameTypeOpen}
+                setValue={setGameTypeValue}
+                setItems={setGameType}
+                style={styles.dropdown}
+                textStyle={{ ...styles.text, fontFamily: 'OpenSans-Medium' }}
+                placeholder="Odaberite..."
+                listItemContainerStyle={styles.dropdownItem}
+                dropDownContainerStyle={{
+                  borderWidth: 0,
+                }}
+              />
+            </View>
+          </View>
+          {/* End dropdown for game type */}
+        </View>
+        <View style={{ ...styles.main, zIndex: 1300 }}>
+          {/* Dropwdown for distance */}
+          <View style={styles.toplevel}>
+            <Text style={styles.text}>Udaljenost</Text>
+
+            <View style={styles.container2}>
+              <DropDownPicker
+                open={distanceOpen}
+                value={distanceValue}
+                items={distance}
+                setOpen={setDistanceOpen}
+                setValue={setDistanceValue}
+                setItems={setDistance}
+                style={styles.dropdown}
+                textStyle={{ ...styles.text, fontFamily: 'OpenSans-Medium' }}
+                placeholder="Odaberite..."
+                listItemContainerStyle={styles.dropdownItem}
+                dropDownContainerStyle={{
+                  borderWidth: 0,
+                }}
+              />
+            </View>
+          </View>
+          {/* End dropdown for distance */}
+        </View>
+        <View style={{ ...styles.main, zIndex: 1200 }}>
+          {/* Picker for datetime */}
+          <View style={styles.toplevel}>
+            <Text style={styles.text}>Datum / Vrijeme</Text>
+
+            <View style={styles.container2}>
+              <Pressable onPress={() => setDatePickerVisibility(true)}>
+                <DateTimePickerModal
+                  is24Hour
+                  isVisible={isDatePickerVisible}
+                  mode="datetime"
+                  onConfirm={date => handleDatetime(date)}
+                  onCancel={() => setDatePickerVisibility(false)}
+                  isDarkModeEnabled={true}
+                />
+                <View style={styles.datetime}>
+                  <Text
+                    style={{ ...styles.text, fontFamily: 'OpenSans-Medium' }}
+                  >
+                    {date.getDate()}.{date.getMonth() + 1}.{date.getFullYear()}.
+                    | {date.getHours()}:{date.getMinutes()}
+                  </Text>
+                  <FontAwesome name="calendar" color="white" size={20} />
+                </View>
+              </Pressable>
+            </View>
+          </View>
+          {/* End picker for datetime */}
+        </View>
+        <View
+          style={{
+            ...styles.main,
+            zIndex: 1100,
+            flexDirection: 'row',
+          }}
+        >
+          <View style={{ flex: 45 }}>
+            <Text style={styles.text}>Rangirano</Text>
+          </View>
+          <View
+            style={{
+              flex: 55,
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+            }}
+          >
+            <Switch
+              style={styles.switch}
+              trackColor={{ false: RED_MAIN, true: GREEN_MAIN }}
+              thumbColor={'#375E75'}
+              onValueChange={() => setRanked(!ranked)}
+              value={ranked}
+            />
+            <Text style={styles.text}>{ranked ? 'Da' : 'Ne'}</Text>
+          </View>
+        </View>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+          }}
+        >
+          <ActionButton
+            name="Pretraži"
+            width={150}
+            style={{ marginRight: 10 }}
+          />
+          <ActionButton
+            name="Pogledaj mečeve"
+            width={150}
+            style={{ marginLeft: 10 }}
+            onPress={() => navigation.navigate(VIEW_MATCHES)}
+          />
+        </View>
+      </View>
     </View>
   );
 };
@@ -42,21 +264,75 @@ const FindMatchScreen = props => {
 export default FindMatchScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: MAIN_BACKGROUND,
+  mapimage: {
+    // width: '100%',
     flex: 1,
-    padding: SCREEN_PADDING,
+    marginVertical: 20,
+    width: '100%',
+    borderRadius: 7.5,
   },
-  lable: {
-    color: WHITE_0,
-    fontSize: 16,
-    textAlignVertical: 'center',
-  },
-  optionRow: {
-    justifyContent: 'space-between',
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
-    zIndex: 100,
+    backgroundColor: MAIN_BACKGROUND,
+  },
+  topView: {
+    flex: 1,
+    width: '85%',
+  },
+  botView: {
+    flex: 2,
+    width: '100%',
+    alignItems: 'center',
+  },
+  main: {
+    width: '85%',
+    paddingVertical: moderateScale(15),
+    paddingHorizontal: moderateScale(5),
+    borderBottomColor: SECONDARY_BACKGROUND,
+    borderBottomWidth: 2,
+    zIndex: 1000,
+  },
+  dropdown: {
+    backgroundColor: '#375E75',
+    borderWidth: 0,
+    height: moderateScale(40),
+  },
+  dropdownItem: {
+    backgroundColor: '#375E75',
+    borderWidth: 0,
+    borderTopColor: SECONDARY_BACKGROUND,
+    borderTopWidth: 1,
+  },
+  container2: {
+    width: '55%',
+  },
+  toplevel: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  text: {
+    color: WHITE_1,
+    fontSize: moderateScale(15),
+    fontFamily: 'OpenSans-Bold',
+  },
+  datetime: {
+    backgroundColor: '#375E75',
+    borderWidth: 0,
+    height: moderateScale(40),
+    borderRadius: moderateScale(10),
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  switch: {
+    transform: [
+      { scaleX: moderateScale(1.33) },
+      { scaleY: moderateScale(1.33) },
+    ],
+    marginHorizontal: moderateScale(20),
   },
 });
