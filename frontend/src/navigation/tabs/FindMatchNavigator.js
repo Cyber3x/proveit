@@ -22,23 +22,30 @@ const FindMatchNavigator = () => {
       initialRouteName={FIND_MATCH}
       screenOptions={{
         headerShown: false,
-      }}>
+        animationEnabled: false,
+      }}
+    >
       <FindMatchNav.Screen name={FIND_MATCH} component={FindMatchScreen} />
       <FindMatchNav.Screen
         name={CREATE_MATCH}
-        component={CreateMatchScreen}></FindMatchNav.Screen>
+        component={CreateMatchScreen}
+      ></FindMatchNav.Screen>
       <FindMatchNav.Screen
         name={VIEW_MATCHES}
-        component={ViewMatchesScreen}></FindMatchNav.Screen>
+        component={ViewMatchesScreen}
+      ></FindMatchNav.Screen>
       <FindMatchNav.Screen
         name={LOBBY}
-        component={LobbyScreen}></FindMatchNav.Screen>
+        component={LobbyScreen}
+      ></FindMatchNav.Screen>
       <FindMatchNav.Screen
         name={ACTIVE_MATCH}
-        component={ActiveMatchScreen}></FindMatchNav.Screen>
+        component={ActiveMatchScreen}
+      ></FindMatchNav.Screen>
       <FindMatchNav.Screen
         name={RESULTS}
-        component={ResultsScreen}></FindMatchNav.Screen>
+        component={ResultsScreen}
+      ></FindMatchNav.Screen>
     </FindMatchNav.Navigator>
   );
 };

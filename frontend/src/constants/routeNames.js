@@ -20,3 +20,4 @@ export const SHOP_NAV = 'Shop nav';
 export const HOME_NAV = 'Home nav';
 export const FIND_MATCH_NAV = 'Find match nav';
 export const MATCH_NOT_FOUND = 'Match not found';
+export const EDIT_PROFILE = 'Edit profile';

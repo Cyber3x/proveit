@@ -1,43 +1,23 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
-import React, { useEffect, useState, useReducer } from 'react';
-import {
-  APP_NAV,
-  AUTH_NAV,
-  EDIT_PROFILE,
-  SCHEDULED,
-} from '../constants/routeNames';
+import React from 'react';
+import { APP_NAV, AUTH_NAV, PROFILE } from '../constants/routeNames';
 
 import { setLogin } from '../store/actions/auth';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { BLUE_GLASS, MAIN_BACKGROUND } from '../constants/colors';
+import { BLUE_GLASS, GREEN_MAIN, MAIN_BACKGROUND } from '../constants/colors';
 import { moderateScale } from 'react-native-size-matters';
 import { WHITE_0, RED_MAIN } from '../constants/colors';
 import { MaterialIcons } from '@expo/vector-icons';
 import ProfileTextTab from '../components/ProfileTextTab';
 import { useSelector } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
-import * as FileSystem from 'expo-file-system';
-import { editProfile } from '../store/actions/profile';
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'edit':
-      return { ...action.edited };
-    default:
-      return state;
-  }
-};
-
-const ProfileScreen = props => {
+const EditProfileScreen = props => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  let profileState = useSelector(state => state.profile);
-  const [imgUrl, setImgUrl] = useState(profileState.imageUri);
-  const [readStorage, setReadStorage] = useState(false);
-  const [profile, setProfile] = useReducer(reducer, { ...profileState });
+  let profile = useSelector(state => state.profile);
 
   const handleLogout = () => {
     dispatch(setLogin(false));
@@ -48,64 +28,22 @@ const ProfileScreen = props => {
     });
   };
 
-  useEffect(() => {
-    FileSystem.readAsStringAsync(
-      FileSystem.documentDirectory + 'profileState.txt',
-    )
-      .then(res => {
-        if (!readStorage) {
-          dispatch(editProfile(JSON.parse(res)));
-          setProfile({ type: 'edit', edited: JSON.parse(res) });
-          let a = JSON.parse(res);
-          setImgUrl(a.imageUri);
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    setReadStorage(true);
-  }, []);
-
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    FileSystem.writeAsStringAsync(
-      FileSystem.documentDirectory + 'profileState.txt',
-      JSON.stringify({
-        ...profile,
-        imageUri: result.uri,
-      }),
-    )
-      .then(() => console.log('A'))
-      .catch(err => console.log('B', err));
-    dispatch(editProfile({ ...profile, imageUri: result.uri }));
-    if (!result.cancelled) {
-      setImgUrl(result.uri);
-    }
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.topView}>
-        <Pressable style={{ alignItems: 'center' }} onPress={() => pickImage()}>
+        <View>
           <Image
-            source={
-              imgUrl === ''
-                ? require('../assets/images/default-profile.jpg')
-                : { uri: imgUrl }
-            }
+            source={require('../assets/images/default-profile.jpg')}
             style={styles.image}
           />
-        </Pressable>
+        </View>
         <View style={styles.nameView}>
           <Text style={styles.textName}>User Ime {'\n'}User Prezime</Text>
           <View>
-            <Pressable onPress={() => handleLogout()} style={styles.pressable}>
+            <Pressable
+              onPress={() => console.log(profile.email)}
+              style={styles.pressable}
+            >
               <Text
                 style={{
                   ...styles.text,
@@ -130,41 +68,30 @@ const ProfileScreen = props => {
           <ProfileTextTab textLeft="Odigrano" textRight="37" />
           <ProfileTextTab textLeft="Pobjeđeno" textRight="23" />
         </View>
-        <View style={styles.wrapper}>
-          <ProfileTextTab textLeft="Mail" textRight={profile.email} />
-          <ProfileTextTab textLeft="Rođen" textRight={profile.dob} />
-          <ProfileTextTab textLeft="Spol" textRight={profile.gender} />
-          <ProfileTextTab
-            textLeft="Najdraži sport"
-            textRight={profile.favSport}
-          />
-        </View>
+        <View style={styles.wrapper}></View>
       </View>
       <View style={styles.botView}>
         <Pressable
-          style={styles.buttonWrapper}
-          onPress={() => props.navigation.navigate(EDIT_PROFILE)}
+          style={{ ...styles.buttonWrapper, backgroundColor: GREEN_MAIN }}
+          onPress={() => props.navigation.navigate(PROFILE)}
         >
-          <Text style={styles.text}>Uredi</Text>
-          <FontAwesome name="edit" size={moderateScale(18)} color={WHITE_0} />
+          <Text style={styles.text}>Spremi</Text>
+          <FontAwesome name="save" size={moderateScale(18)} color={WHITE_0} />
         </Pressable>
-        <Pressable
-          style={styles.buttonWrapper}
-          onPress={() => props.navigation.navigate(SCHEDULED)}
-        >
+        <View style={styles.buttonWrapper}>
           <Text style={styles.text}>Zakazano</Text>
           <FontAwesome
             name="calendar-plus-o"
             size={moderateScale(18)}
             color={WHITE_0}
           />
-        </Pressable>
+        </View>
       </View>
     </View>
   );
 };
 
-export default ProfileScreen;
+export default EditProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
