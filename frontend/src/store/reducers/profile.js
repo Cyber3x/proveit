@@ -6,13 +6,14 @@ const initalState = {
   dob: '10.10.2002.',
   gender: 'Muško',
   favSport: Sports.FOOTBALL_NAME,
+  imageUri: '',
 };
 
 export default (state = initalState, action) => {
   switch (action.type) {
     case EDIT_PROFILE:
-      let newState = { ...state };
-      newState = action.newProfile;
+      let newState = { ...action.newProfile };
+      console.log('Test', { ...action.newProfile });
       return newState;
     default:
       return state;

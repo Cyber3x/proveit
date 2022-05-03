@@ -1,5 +1,5 @@
 export const BASKETBALL = 'basketball';
-export const FOOTBALL = 'footbal';
+export const FOOTBALL = 'football';
 export const TENIS = 'tenis';
 export const VOLLEYBALL = 'volleyball';
 export const HANDBALL = 'handball';

@@ -12,7 +12,7 @@ import {
   SECONDARY_BACKGROUND,
   WHITE_1,
 } from '../constants/colors';
-import { VIEW_MATCHES } from '../constants/routeNames';
+import { CREATE_MATCH, VIEW_MATCHES } from '../constants/routeNames';
 import {
   basketballTypes,
   distanceDropdown,
@@ -39,12 +39,16 @@ import mapshot from '../assets/images/mapshot.png';
 
 */
 
-const FindMatchScreen = ({ navigation }) => {
+const FindMatchScreen = ({ route, navigation }) => {
   // State for sports dropdown
+
   const currentSport = useStore(state => state.currentSport);
   const [sports, setSports] = useState(sportsDropdown);
   const [sportOpen, setSportOpen] = useState(false);
   const [sportValue, setSportValue] = useState(currentSport);
+  useEffect(() => {
+    setSportValue(currentSport);
+  }, [currentSport]);
 
   // Choose sport dropdown based on sport selected
   const gt = [
@@ -248,6 +252,7 @@ const FindMatchScreen = ({ navigation }) => {
             name="Pretraži"
             width={150}
             style={{ marginRight: 10 }}
+            onPress={() => navigation.navigate(CREATE_MATCH)}
           />
           <ActionButton
             name="Pogledaj mečeve"

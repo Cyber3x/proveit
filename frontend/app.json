@@ -3,7 +3,8 @@
   "displayName": "ProveIT",
   "expo": {
     "name": "ProveIT",
-    "slug": "prove-it"
+    "slug": "prove-it",
+    "plugins": ["expo-image-picker"]
   },
   "android": {
     "package": "com.proveit",

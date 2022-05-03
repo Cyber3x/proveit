@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Pressable, Switch } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Switch, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { SECONDARY_BACKGROUND, WHITE_1 } from '../constants/colors';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -18,6 +18,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { moderateScale } from 'react-native-size-matters';
 import { GREEN_MAIN, RED_MAIN } from '../constants/colors';
+import mapshot from '../assets/images/mapshot.png';
 
 /*
   // State for sports dropdown
@@ -95,7 +96,9 @@ const CreateMatchScreen = props => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.topView}></View>
+      <View style={styles.topView}>
+        <Image source={mapshot} style={styles.mapimage} />
+      </View>
       <View style={styles.botView}>
         <View style={{ ...styles.main, zIndex: 1500 }}>
           {/* Dropwdown for sports */}
@@ -245,6 +248,7 @@ const styles = StyleSheet.create({
   },
   topView: {
     flex: 1,
+    width: '85%',
   },
   botView: {
     flex: 2,
@@ -299,5 +303,12 @@ const styles = StyleSheet.create({
       { scaleY: moderateScale(1.33) },
     ],
     marginHorizontal: moderateScale(20),
+  },
+  mapimage: {
+    // width: '100%',
+    flex: 1,
+    marginVertical: 20,
+    width: '100%',
+    borderRadius: 7.5,
   },
 });

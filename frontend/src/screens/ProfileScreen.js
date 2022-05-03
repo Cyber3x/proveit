@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import {
   APP_NAV,
   AUTH_NAV,
@@ -17,14 +17,27 @@ import { MaterialIcons } from '@expo/vector-icons';
 import ProfileTextTab from '../components/ProfileTextTab';
 import { useSelector } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
+import { editProfile } from '../store/actions/profile';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'edit':
+      return { ...action.edited };
+    default:
+      return state;
+  }
+};
 
 const ProfileScreen = props => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const [imgUrl, setImgUrl] = useState('');
-
-  let profile = useSelector(state => state.profile);
+  let profileState = useSelector(state => state.profile);
+  const [imgUrl, setImgUrl] = useState(profileState.imageUri);
+  const [readStorage, setReadStorage] = useState(false);
+  const [profile, setProfile] = useReducer(reducer, { ...profileState });
 
   const handleLogout = () => {
     dispatch(setLogin(false));
@@ -35,12 +48,57 @@ const ProfileScreen = props => {
     });
   };
 
+  useEffect(() => {
+    FileSystem.readAsStringAsync(
+      FileSystem.documentDirectory + 'profileState.txt',
+    )
+      .then(res => {
+        if (!readStorage) {
+          dispatch(editProfile(JSON.parse(res)));
+          setProfile({ type: 'edit', edited: JSON.parse(res) });
+          let a = JSON.parse(res);
+          setImgUrl(a.imageUri);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    setReadStorage(true);
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    FileSystem.writeAsStringAsync(
+      FileSystem.documentDirectory + 'profileState.txt',
+      JSON.stringify({
+        ...profile,
+        imageUri: result.uri,
+      }),
+    )
+      .then(() => console.log('A'))
+      .catch(err => console.log('B', err));
+    dispatch(editProfile({ ...profile, imageUri: result.uri }));
+    if (!result.cancelled) {
+      setImgUrl(result.uri);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topView}>
         <Pressable style={{ alignItems: 'center' }} onPress={() => pickImage()}>
           <Image
-            source={require('../assets/images/default-profile.jpg')}
+            source={
+              imgUrl === ''
+                ? require('../assets/images/default-profile.jpg')
+                : { uri: imgUrl }
+            }
             style={styles.image}
           />
         </Pressable>
