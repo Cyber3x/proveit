@@ -6,6 +6,7 @@ from match.models import Sport
 class PlayerProfile(models.Model):
     # TODO: brainstrom and add needed fields
 
+    
     user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
     is_banned = models.BooleanField(default = False)
     is_premium = models.BooleanField(default=False)
