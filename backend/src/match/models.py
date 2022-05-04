@@ -26,7 +26,7 @@ class Match(models.Model):
         FINISHED = 'F'
         CANCELED = 'C'
     
-    admin = models.OneToOneField(User, default = None, on_delete = models.DO_NOTHING, related_name= "game_admin")
+    admin_id = models.IntegerField(default = 0)
     sport = models.ForeignKey(Sport, on_delete = models.DO_NOTHING, default = 1)
     players = models.ManyToManyField(User, default = None)
     start_datetime = models.DateTimeField()
