@@ -67,6 +67,7 @@ const MainNavigator = () => {
           },
         }}
       />
+      {/*
       <Screen
         name={SHOP_NAV}
         component={ShopNavigator}
@@ -78,6 +79,7 @@ const MainNavigator = () => {
           },
         }}
       />
+       */}
       <Screen
         name={PROFILE_NAV}
         component={ProfileNavigator}
