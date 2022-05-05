@@ -6,10 +6,13 @@ from rest_framework.views import APIView
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 from match.serializers import MatchSerializer
 from django.contrib.auth.models import User
-from .models import Match
+from .models import Match, Sport
 from .serializers import MatchSerializer
 from datetime import date, timedelta, datetime
 import geopy.distance
+from rest_framework import generics, permissions, authentication
+
+
 
 # TODO: add sport to POST
 # match/
@@ -90,14 +93,17 @@ class FilteredMatchesView(APIView):
 # match/create/<n_players>/<is_ranked>/<is_private>/<latitude>/<longitude>/<sport_id>
 class CreateLobbyView(APIView):
 
-    def post(self, request: Request, n_players, is_ranked_int, is_private_int, latitude, longitude, sport_id) -> Response:
+    def post(self, request: Request, n_players, is_ranked_int, is_private_int, latitude, longitude, sport_id, admin_id) -> Response:
 
         is_ranked = True if is_ranked_int == 1 else False
         is_private = True if is_private_int == 1 else False
+        
+        sport = Sport.objects.get(id = sport_id)
+
 
         match = Match.objects.create(number_of_players = n_players, state = 'L', 
                                     is_ranked = is_ranked, is_private = is_private, latitude = latitude, 
-                                    longitude = longitude, start_datetime = datetime.now(), sport = sport_id)
+                                    longitude = longitude, start_datetime = datetime.now(), sport = sport, admin_id = admin_id)
 
         serializer = MatchSerializer(match)
         return Response(serializer.data, status=HTTP_200_OK)
