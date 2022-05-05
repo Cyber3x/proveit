@@ -148,7 +148,6 @@ const ProfileScreen = props => {
           <Text style={styles.text}>Uredi</Text>
           <FontAwesome name="edit" size={moderateScale(18)} color={WHITE_0} />
         </Pressable>
-        {/* 
         <Pressable
           style={styles.buttonWrapper}
           onPress={() => props.navigation.navigate(SCHEDULED)}
@@ -160,7 +159,6 @@ const ProfileScreen = props => {
             color={WHITE_0}
           />
         </Pressable>
-        */}
       </View>
     </View>
   );
