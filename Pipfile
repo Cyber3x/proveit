@@ -4,12 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
-djangorestframework = "*"
-geopy = "*"
-django-rest-knox = "*"
-psycopg2 = "*"
-binary = "*"
 
 [dev-packages]
 

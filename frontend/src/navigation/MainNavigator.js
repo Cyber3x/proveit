@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import {
+  CREATE_MATCH,
   FIND_MATCH_NAV,
   HOME,
   HOME_NAV,
@@ -20,6 +21,7 @@ import {
   WHITE_1,
   WHITE_0,
 } from '../constants/colors';
+import CreateMatchScreen from '../screens/CreateMatchScreen';
 
 const MainNavigator = () => {
   const TabsNavigator = createBottomTabNavigator();
@@ -68,13 +70,11 @@ const MainNavigator = () => {
         }}
       />
       <Screen
-        name={SHOP_NAV}
-        component={ShopNavigator}
+        name={CREATE_MATCH}
+        component={CreateMatchScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => {
-            return (
-              <FontAwesome name="shopping-cart" size={size} color={color} />
-            );
+            return <FontAwesome name="plus" size={size} color={color} />;
           },
         }}
       />

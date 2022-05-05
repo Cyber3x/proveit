@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { moderateScale } from 'react-native-size-matters';
 import ActionButton from '../components/ActionButton';
 import PlayerDisplay from '../components/PlayerDisplay';
@@ -10,12 +11,12 @@ import {
   RED_MAIN,
   WHITE_1,
 } from '../constants/colors';
-import { FIND_MATCH } from '../constants/routeNames';
+import { ACTIVE_MATCH, FIND_MATCH } from '../constants/routeNames';
 import { getImage, getName } from '../utils/getBasedOnSport';
 
 const LobbyScreen = ({ route, navigation }) => {
   const { sport, playerCountText, statusText } = route.params.match;
-
+  let match = route.params.match;
   return (
     <View style={styles.container}>
       <View style={styles.matchInfoOuter}>
@@ -64,9 +65,26 @@ const LobbyScreen = ({ route, navigation }) => {
           </LinearGradient>
         </ImageBackground>
       </View>
-      <View stlye={styles.playerList}>
-        <PlayerDisplay name="Marko Polo" />
-        <PlayerDisplay name="Marko yolo" />
+      <View style={styles.playerList}>
+        <View style={styles.borderView}>
+          <Text
+            style={{
+              fontFamily: 'OpenSans-Medium',
+              fontSize: moderateScale(24),
+              color: GRAY_MAIN,
+              marginVertical: 5,
+            }}
+          >
+            ČEKAONICA
+          </Text>
+          <ScrollView
+            style={{ width: '100%' }}
+            contentContainerStyle={{ alignItems: 'center' }}
+          >
+            <PlayerDisplay name="Marko Polo" />
+            <PlayerDisplay name="Marko yolo" />
+          </ScrollView>
+        </View>
       </View>
       <View style={styles.actionButtons}>
         <ActionButton
@@ -75,7 +93,11 @@ const LobbyScreen = ({ route, navigation }) => {
           name="Napusti sahranu"
           style={{ backgroundColor: RED_MAIN }}
         />
-        <ActionButton width={160} name="Pokreni igru"></ActionButton>
+        <ActionButton
+          onPress={() => navigation.navigate(ACTIVE_MATCH, { match })}
+          width={160}
+          name="Pokreni igru"
+        ></ActionButton>
       </View>
     </View>
   );
@@ -89,7 +111,7 @@ const styles = StyleSheet.create({
     backgroundColor: MAIN_BACKGROUND,
   },
   matchInfoOuter: {
-    flex: 1,
+    flex: 10,
   },
   matchInfo: {
     paddingHorizontal: '5%',
@@ -99,12 +121,23 @@ const styles = StyleSheet.create({
   sportImage: {},
   playerList: {
     padding: '5%',
-    backgroundColor: '#f00',
+    flex: 17,
+    alignItems: 'center',
+    width: '100%',
   },
   actionButtons: {
     padding: '5%',
     justifyContent: 'space-between',
     display: 'flex',
     flexDirection: 'row',
+  },
+  borderView: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    borderTopColor: 'whitesmoke',
+    borderTopWidth: 1,
+    alignItems: 'center',
+    paddingTop: 8,
   },
 });
