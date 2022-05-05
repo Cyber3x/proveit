@@ -15,6 +15,9 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer);
 
+import { Logs } from 'expo';
+Logs.enableExpoCliLogging();
+
 const App = () => {
   let [fontsLoaded] = useFonts({
     'OpenSans-Medium': require('./assets/fonts/OpenSans-Medium.ttf'),
